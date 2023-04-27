@@ -8,6 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WindowType;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 import utils.Utils;
 
 import java.util.List;
@@ -15,10 +17,12 @@ import java.util.List;
 public class MyStepdefs extends BaseSteps{
 
     String lastMacName;
+    String opencartHandle;
 
     @Given("{string} git")
     public void httpOpencartAbstractaUsGit(String url) {
         driver.get(url);
+        opencartHandle = driver.getWindowHandle();
     }
 
     @When("mac arat")
@@ -39,7 +43,7 @@ public class MyStepdefs extends BaseSteps{
 
     @And("yeni TAB'da {string} adreaine gidin")
     public void yeniTABDaHttpsOpensourceDemoOrangehrmliveComWebIndexPhpDashboardIndexAdreaineGidin(String url) {
-        driver.switchTo().newWindow(WindowType.WINDOW).get(url);
+        driver.switchTo().newWindow(WindowType.TAB).get(url);
     }
 
     @And("login olun")
@@ -70,4 +74,9 @@ public class MyStepdefs extends BaseSteps{
     }
 
 
+    @And("ilk tabdaki opencart sayfasına geri gelin")
+    public void ilkTabdakiOpencartSayfasınaGeriGelin() {
+        driver.switchTo().window(opencartHandle);
+        Utils.takeScreenShot("BackToOpenCartSS");
+    }
 }
